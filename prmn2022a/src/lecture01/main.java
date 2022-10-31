@@ -20,7 +20,6 @@ public class main {
         }
         int[] array = new int[100];
 
-        int count = 0;
         int sum = 0;
 
         for(int i = 0; i < array.length;i++){
