@@ -9,12 +9,10 @@ public class Exercise3_2 {
     List<String> list = new ArrayList<>();
     System.out.println("何行文入力しますか？：");
     int i = input.nextInt();
-    for(int j = 0;j < i + 1;j++){
+    for(int j = 0;j < i ;j++){
 
-       if(j != 0) {
-           System.out.print(j + "行目:");
-       }
-        String c = input.nextLine();
+        System.out.print(j + 1 + "行目:");
+        String c = input.next();
         list.add(c);
 
 
