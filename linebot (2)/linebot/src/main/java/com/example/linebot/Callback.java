@@ -1,17 +1,14 @@
 package com.example.linebot;
 
-import com.example.linebot.replier.Omikuji;
+import com.example.linebot.replier.*;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.event.MessageEvent;
-import com.example.linebot.replier.Parrot;
-import com.example.linebot.replier.Follow;
 import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.example.linebot.replier.Greet;
 //バイナリーデータ受信
 import com.linecorp.bot.client.LineBlobClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -26,6 +23,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+
+import com.linecorp.bot.model.event.PostbackEvent;
 
 @LineMessageHandler
 public class Callback {
@@ -52,6 +51,15 @@ public class Callback {
             case "おみくじ":
                 Omikuji omikuji = new Omikuji();
                 return omikuji.reply();
+            case "バブル":
+                BubbleSample bubbleSample = new BubbleSample();
+                return bubbleSample.reply();
+            case "カルーセル":
+                CarouselSample carouselSample = new CarouselSample();
+                return carouselSample.reply();
+            case "今日のメニュー":
+                Menu menu = new Menu();
+                return menu.reply();
             default:
                 Parrot parrot = new Parrot(event);
                 return parrot.reply();
@@ -98,6 +106,13 @@ public class Callback {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    // PostBackEventに対応する
+    @EventMapping
+    public Message handlePostBack(PostbackEvent event) {
+        DialogAnswer dialogAnswer = new DialogAnswer(event);
+        return dialogAnswer.reply();
     }
 
 
